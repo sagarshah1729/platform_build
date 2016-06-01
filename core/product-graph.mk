@@ -90,7 +90,7 @@ endef
 define transform-product-debug
 $(OUT_DIR)/products/$(strip $(1)).txt: $(this_makefile)
 	@echo Product debug info file: $$@
-	$(hide) rm -f $$@
+	$(hide) rm -rf $$@
 	$(hide) mkdir -p $$(dir $$@)
 	$(hide) echo 'FILE=$(strip $(1))' >> $$@
 	$(hide) echo 'PRODUCT_NAME=$$(PRODUCTS.$(strip $(1)).PRODUCT_NAME)' >> $$@

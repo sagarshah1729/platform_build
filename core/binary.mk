@@ -1178,7 +1178,7 @@ import_includes_deps := $(strip \
 $(import_includes): PRIVATE_IMPORT_EXPORT_INCLUDES := $(import_includes_deps)
 $(import_includes) : $(LOCAL_MODULE_MAKEFILE_DEP) $(import_includes_deps)
 	@echo Import includes file: $@
-	$(hide) mkdir -p $(dir $@) && rm -f $@
+	$(hide) mkdir -p $(dir $@) && rm -rf $@
 ifdef import_includes_deps
 	$(hide) for f in $(PRIVATE_IMPORT_EXPORT_INCLUDES); do \
 	  cat $$f >> $@; \
@@ -1426,7 +1426,7 @@ $(export_includes): PRIVATE_EXPORT_C_INCLUDE_DIRS := $(my_export_c_include_dirs)
 # generated after the headers, so this is a convenient way to ensure the headers exist.
 $(export_includes) : $(LOCAL_MODULE_MAKEFILE_DEP) $(proto_generated_headers) $(dbus_generated_headers) $(aidl_gen_cpp) $(vts_gen_cpp)
 	@echo Export includes file: $< -- $@
-	$(hide) mkdir -p $(dir $@) && rm -f $@.tmp
+	$(hide) mkdir -p $(dir $@) && rm -rf $@.tmp
 ifdef my_export_c_include_dirs
 	$(hide) for d in $(PRIVATE_EXPORT_C_INCLUDE_DIRS); do \
 	        echo "-I $$d" >> $@.tmp; \

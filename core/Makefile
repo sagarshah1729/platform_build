@@ -335,7 +335,7 @@ PACKAGES_TO_STAT := \
 $(PACKAGE_STATS_FILE): $(PACKAGES_TO_STAT)
 	@echo Package stats: $@
 	@mkdir -p $(dir $@)
-	$(hide) rm -f $@
+	$(hide) rm -rf $@
 ifeq ($(PACKAGES_TO_STAT),)
 # Create empty package stats file if target builds no jar(s) or apk(s).
 	$(hide) touch $@
@@ -367,7 +367,7 @@ APKCERTS_FILE := $(intermediates)/$(name).txt
 $(APKCERTS_FILE):
 	@echo APK certs list: $@
 	@mkdir -p $(dir $@)
-	@rm -f $@
+	@rm -rf $@
 	$(foreach p,$(PACKAGES),\
 	  $(if $(PACKAGES.$(p).EXTERNAL_KEY),\
 	    $(call _apkcerts_echo_with_newline,\
@@ -697,7 +697,7 @@ $(kernel_notice_file): \
 ALL_DEFAULT_INSTALLED_MODULES += $(TARGET_OUT_ETC)/security/otacerts.zip
 $(TARGET_OUT_ETC)/security/otacerts.zip: KEY_CERT_PAIR := $(DEFAULT_KEY_CERT_PAIR)
 $(TARGET_OUT_ETC)/security/otacerts.zip: $(addsuffix .x509.pem,$(DEFAULT_KEY_CERT_PAIR)) | $(ZIPTIME)
-	$(hide) rm -f $@
+	$(hide) rm -rf $@
 	$(hide) mkdir -p $(dir $@)
 	$(hide) zip -qjX $@ $<
 	$(remove-timestamps-from-package)
@@ -709,7 +709,7 @@ ifeq ($(AB_OTA_UPDATER),true)
 ifeq ($(BRILLO),)
 ALL_DEFAULT_INSTALLED_MODULES += $(TARGET_OUT_ETC)/update_engine/update-payload-key.pub.pem
 $(TARGET_OUT_ETC)/update_engine/update-payload-key.pub.pem: $(addsuffix .x509.pem,$(DEFAULT_KEY_CERT_PAIR))
-	$(hide) rm -f $@
+	$(hide) rm -rf $@
 	$(hide) mkdir -p $(dir $@)
 	$(hide) openssl x509 -pubkey -noout -in $< > $@
 endif
@@ -952,9 +952,9 @@ define build-recoveryimage-target
   @echo Copying baseline ramdisk...
   $(hide) rsync -a --exclude=etc --exclude=sdcard $(TARGET_ROOT_OUT) $(TARGET_RECOVERY_OUT) # "cp -Rf" fails to overwrite broken symlinks on Mac.
   @echo Modifying ramdisk contents...
-  $(hide) rm -f $(TARGET_RECOVERY_ROOT_OUT)/init*.rc
+  $(hide) rm -rf $(TARGET_RECOVERY_ROOT_OUT)/init*.rc
   $(hide) cp -f $(recovery_initrc) $(TARGET_RECOVERY_ROOT_OUT)/
-  $(hide) rm -f $(TARGET_RECOVERY_ROOT_OUT)/sepolicy
+  $(hide) rm -rf $(TARGET_RECOVERY_ROOT_OUT)/sepolicy
   $(hide) cp -f $(recovery_sepolicy) $(TARGET_RECOVERY_ROOT_OUT)/sepolicy
   $(hide) cp $(TARGET_ROOT_OUT)/init.recovery.*.rc $(TARGET_RECOVERY_ROOT_OUT)/ || true # Ignore error when the src file doesn't exist.
   $(hide) mkdir -p $(TARGET_RECOVERY_ROOT_OUT)/res
@@ -1087,7 +1087,7 @@ INSTALLED_FILES_FILE := $(PRODUCT_OUT)/installed-files.txt
 $(INSTALLED_FILES_FILE): $(FULL_SYSTEMIMAGE_DEPS)
 	@echo Installed file list: $@
 	@mkdir -p $(dir $@)
-	@rm -f $@
+	@rm -rf $@
 	$(hide) build/tools/fileslist.py $(TARGET_OUT) > $@
 
 .PHONY: installed-file-list
@@ -1263,7 +1263,7 @@ $(INSTALLED_PLATFORM_ZIP): PRIVATE_DEX_FILES := $(pdk_classes_dex)
 $(INSTALLED_PLATFORM_ZIP): PRIVATE_ODEX_CONFIG := $(pdk_odex_config_mk)
 $(INSTALLED_PLATFORM_ZIP) : $(INTERNAL_SYSTEMIMAGE_FILES) $(pdk_odex_config_mk)
 	$(call pretty,"Platform zip package: $(INSTALLED_PLATFORM_ZIP)")
-	$(hide) rm -f $@
+	$(hide) rm -rf $@
 	$(hide) cd $(dir $@) && zip -qryX $(notdir $@) \
 		$(TARGET_COPY_OUT_SYSTEM) \
 		$(patsubst $(PRODUCT_OUT)/%, %, $(TARGET_OUT_NOTICE_FILES)) \
@@ -1432,7 +1432,7 @@ INSTALLED_FILES_FILE_VENDOR := $(PRODUCT_OUT)/installed-files-vendor.txt
 $(INSTALLED_FILES_FILE_VENDOR) : $(INTERNAL_VENDORIMAGE_FILES)
 	@echo Installed file list: $@
 	@mkdir -p $(dir $@)
-	@rm -f $@
+	@rm -rf $@
 	$(hide) build/tools/fileslist.py $(TARGET_OUT_VENDOR) > $@
 
 vendorimage_intermediates := \

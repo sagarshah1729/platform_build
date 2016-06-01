@@ -906,7 +906,7 @@ define transform-d-to-p-args
 $(hide) cp $(1) $(2); \
 	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
 		-e '/^$$/ d' -e 's/$$/ :/' < $(1) >> $(2); \
-	rm -f $(1)
+	rm -rf $(1)
 endef
 
 define transform-d-to-p
@@ -1526,7 +1526,7 @@ endef
 define transform-o-to-static-lib
 @echo "target StaticLib: $(PRIVATE_MODULE) ($@)"
 @mkdir -p $(dir $@)
-@rm -f $@
+@rm -rf $@
 $(extract-and-include-target-whole-static-libs)
 $(call split-long-arguments,$($(PRIVATE_2ND_ARCH_VAR_PREFIX)TARGET_AR) \
     $($(PRIVATE_2ND_ARCH_VAR_PREFIX)TARGET_GLOBAL_ARFLAGS) \
@@ -1574,7 +1574,7 @@ endef
 define transform-host-o-to-static-lib
 @echo "$($(PRIVATE_PREFIX)DISPLAY) StaticLib: $(PRIVATE_MODULE) ($@)"
 @mkdir -p $(dir $@)
-@rm -f $@
+@rm -rf $@
 $(extract-and-include-host-whole-static-libs)
 $(call split-long-arguments,$($(PRIVATE_2ND_ARCH_VAR_PREFIX)$(PRIVATE_PREFIX)AR) \
     $($(PRIVATE_2ND_ARCH_VAR_PREFIX)$(PRIVATE_PREFIX)GLOBAL_ARFLAGS) \
@@ -1962,7 +1962,7 @@ endef
 
 # dump-words-to-file, <word list>, <output file>
 define dump-words-to-file
-        @rm -f $(2)
+        @rm -rf $(2)
         @touch $(2)
         @$(call emit-line,$(wordlist 1,500,$(1)),$(2))
         @$(call emit-line,$(wordlist 501,1000,$(1)),$(2))
@@ -2029,7 +2029,7 @@ endef
 # $(1): javac
 # $(2): bootclasspath
 define compile-java
-$(hide) rm -f $@
+$(hide) rm -rf $@
 $(hide) rm -rf $(PRIVATE_CLASS_INTERMEDIATES_DIR)
 $(hide) mkdir -p $(dir $@)
 $(hide) mkdir -p $(PRIVATE_CLASS_INTERMEDIATES_DIR)
@@ -2053,15 +2053,15 @@ $(hide) if [ -s $(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list-uniq ] ; the
     2>$(PRIVATE_CLASS_INTERMEDIATES_DIR)/stderr \
     && ( [ -s $(PRIVATE_CLASS_INTERMEDIATES_DIR)/stderr ] && \
     echo -e ${CL_YLW}"`cat $(PRIVATE_CLASS_INTERMEDIATES_DIR)/stderr`"${CL_RST} 1>&2; \
-    rm -f $(PRIVATE_CLASS_INTERMEDIATES_DIR)/stderr ) \
+    rm -rf $(PRIVATE_CLASS_INTERMEDIATES_DIR)/stderr ) \
     || ( [ -s $(PRIVATE_CLASS_INTERMEDIATES_DIR)/stderr ] && \
     echo -e ${CL_RED}"`cat $(PRIVATE_CLASS_INTERMEDIATES_DIR)/stderr`"${CL_RST} 1>&2; \
     rm -rf $(PRIVATE_CLASS_INTERMEDIATES_DIR); exit 41 ) \
 fi
 $(if $(PRIVATE_JAVA_LAYERS_FILE), $(hide) build/tools/java-layers.py \
     $(PRIVATE_JAVA_LAYERS_FILE) \@$(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list-uniq,)
-$(hide) rm -f $(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list
-$(hide) rm -f $(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list-uniq
+$(hide) rm -rf $(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list
+$(hide) rm -rf $(PRIVATE_CLASS_INTERMEDIATES_DIR)/java-source-list-uniq
 $(if $(PRIVATE_JAR_EXCLUDE_FILES), $(hide) find $(PRIVATE_CLASS_INTERMEDIATES_DIR) \
     -name $(word 1, $(PRIVATE_JAR_EXCLUDE_FILES)) \
     $(addprefix -o -name , $(wordlist 2, 999, $(PRIVATE_JAR_EXCLUDE_FILES))) \
@@ -2096,8 +2096,8 @@ endef
 #   list length problems with Cygwin
 # - we filter out duplicate java file names because Jack doesn't like them.
 define jack-java-to-dex
-$(hide) rm -f $@
-$(hide) rm -f $(PRIVATE_CLASSES_JACK)
+$(hide) rm -rf $@
+$(hide) rm -rf $(PRIVATE_CLASSES_JACK)
 $(hide) rm -rf $(PRIVATE_JACK_INTERMEDIATES_DIR)
 $(hide) mkdir -p $(dir $@)
 $(hide) mkdir -p $(dir $(PRIVATE_CLASSES_JACK))
@@ -2146,7 +2146,7 @@ $(call call-jack) \
     $$tmpEcjArg \
     || ( rm -rf $(PRIVATE_CLASSES_JACK); exit 41 )
 $(hide) mv $(PRIVATE_JACK_INTERMEDIATES_DIR)/classes*.dex $(dir $@)
-$(hide) rm -f $(PRIVATE_JACK_INTERMEDIATES_DIR)/java-source-list
+$(hide) rm -rf $(PRIVATE_JACK_INTERMEDIATES_DIR)/java-source-list
 $(if $(PRIVATE_EXTRA_JAR_ARGS),$(hide) rm -rf $@.res.tmp)
 $(hide) mv $(PRIVATE_JACK_INTERMEDIATES_DIR)/java-source-list-uniq $(PRIVATE_JACK_INTERMEDIATES_DIR).java-source-list
 $(if $(PRIVATE_JAR_PACKAGES), $(hide) echo unsupported options PRIVATE_JAR_PACKAGES in $@; exit 53)
@@ -2161,9 +2161,9 @@ endef
 #   list length problems with Cygwin
 # - we filter out duplicate java file names because Jack doesn't like them.
 define jack-check-java
-$(hide) rm -f $@
-$(hide) rm -f $@.java-source-list
-$(hide) rm -f $@.java-source-list-uniq
+$(hide) rm -rf $@
+$(hide) rm -rf $@.java-source-list
+$(hide) rm -rf $@.java-source-list-uniq
 $(hide) mkdir -p $(dir $@)
 $(if $(PRIVATE_JACK_INCREMENTAL_DIR),$(hide) mkdir -p $(PRIVATE_JACK_INCREMENTAL_DIR))
 $(call dump-words-to-file,$(PRIVATE_JAVA_SOURCES),$@.java-source-list)
@@ -2276,7 +2276,7 @@ endif  # TARGET_BUILD_APPS
 #   list length problems with Cygwin
 # - we filter out duplicate java file names because Jack doesn't like them.
 define java-to-jack
-$(hide) rm -f $@
+$(hide) rm -rf $@
 $(hide) rm -rf $(PRIVATE_JACK_INTERMEDIATES_DIR)
 $(hide) mkdir -p $(dir $@)
 $(hide) mkdir -p $(PRIVATE_JACK_INTERMEDIATES_DIR)
@@ -2318,8 +2318,8 @@ $(call call-jack) \
     $(addprefix --config-jarjar ,$(strip $(PRIVATE_JARJAR_RULES))) \
     $(if $(PRIVATE_JACK_PROGUARD_FLAGS),--config-proguard $@.flags) \
     $$tmpEcjArg \
-    || ( rm -f $@ ; exit 41 )
-$(hide) rm -f $(PRIVATE_JACK_INTERMEDIATES_DIR)/java-source-list
+    || ( rm -rf $@ ; exit 41 )
+$(hide) rm -rf $(PRIVATE_JACK_INTERMEDIATES_DIR)/java-source-list
 $(if $(PRIVATE_EXTRA_JAR_ARGS),$(hide) rm -rf $@.res.tmp)
 $(hide) mv $(PRIVATE_JACK_INTERMEDIATES_DIR)/java-source-list-uniq $(PRIVATE_JACK_INTERMEDIATES_DIR).java-source-list
 $(if $(PRIVATE_JAR_PACKAGES), $(hide) echo unsupported options PRIVATE_JAR_PACKAGES in $@; exit 53)
@@ -2435,7 +2435,7 @@ endef
 define add-java-resources-to
 $(call dump-words-to-file, $(PRIVATE_EXTRA_JAR_ARGS), $(1).jar-arg-list)
 $(hide) jar uf $(1) @$(1).jar-arg-list
-@rm -f $(1).jar-arg-list
+@rm -rf $(1).jar-arg-list
 endef
 
 # Add resources carried by static Jack libraries.
@@ -2924,7 +2924,7 @@ include $(BUILD_SYSTEM)/distdir.mk
 #	  cp $(df).d $(df).P; \
 #	  sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
 #	      -e '/^$$/ d' -e 's/$$/ :/' < $(df).d >> $(df).P; \
-#	  rm -f $(df).d
+#	  rm -rf $(df).d
 #	$(COMPILE.c) -o $@ $<
 
 #-include $(SRCS:%.c=$(DEPDIR)/%.P)
@@ -2935,4 +2935,4 @@ include $(BUILD_SYSTEM)/distdir.mk
 #	@cp $*.d $*.P; \
 #	  sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
 #	      -e '/^$$/ d' -e 's/$$/ :/' < $*.d >> $*.P; \
-#	  rm -f $*.d
+#	  rm -rf $*.d

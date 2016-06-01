@@ -37,7 +37,7 @@ INTERNAL_CLEAN_BUILD_VERSION := 6
 #     $(call add-clean-step, touch -c external/sqlite/sqlite3.h)
 #     $(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/STATIC_LIBRARIES/libz_intermediates)
 #
-# Always use "touch -c" and "rm -f" or "rm -rf" to gracefully deal with
+# Always use "touch -c" and "rm -rf" or "rm -rf" to gracefully deal with
 # files that are missing or have been moved.
 #
 # Use $(PRODUCT_OUT) to get to the "out/target/product/blah/" directory.
@@ -56,7 +56,7 @@ INTERNAL_CLEAN_BUILD_VERSION := 6
 # For example:
 #$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/APPS/AndroidTests_intermediates)
 #$(call add-clean-step, rm -rf $(OUT_DIR)/target/common/obj/JAVA_LIBRARIES/core_intermediates)
-#$(call add-clean-step, find $(OUT_DIR) -type f -name "IGTalkSession*" -print0 | xargs -0 rm -f)
+#$(call add-clean-step, find $(OUT_DIR) -type f -name "IGTalkSession*" -print0 | xargs -0 rm -rf)
 #$(call add-clean-step, rm -rf $(PRODUCT_OUT)/data/*)
 
 # ************************************************

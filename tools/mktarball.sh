@@ -50,10 +50,10 @@ if [ $? -eq 0 ] ; then
         ;;
     esac
     success=$?
-    [ $success -eq 0 ] || rm -f ${target_tarball}
-    rm -f ${target_tar}
+    [ $success -eq 0 ] || rm -rf ${target_tarball}
+    rm -rf ${target_tar}
     exit $success
 fi
 
-rm -f ${target_tar}
+rm -rf ${target_tar}
 exit 1

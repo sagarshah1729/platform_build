@@ -94,7 +94,7 @@ endif
 # $(1): the input .jar or .apk file
 # $(2): the output .odex file
 define dex2oat-one-file
-$(hide) rm -f $(2)
+$(hide) rm -rf $(2)
 $(hide) mkdir -p $(dir $(2))
 $(hide) ANDROID_LOG_TAGS="*:e" $(DEX2OAT) \
 	--runtime-arg -Xms$(DEX2OAT_XMS) --runtime-arg -Xmx$(DEX2OAT_XMX) \

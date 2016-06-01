@@ -4,7 +4,7 @@
 
 pdk_dexpreopt_config_mk := $(TARGET_OUT_INTERMEDIATES)/pdk_dexpreopt_config.mk
 
-$(shell rm -f $(pdk_dexpreopt_config_mk) && mkdir -p $(dir $(pdk_dexpreopt_config_mk)) && \
+$(shell rm -rf $(pdk_dexpreopt_config_mk) && mkdir -p $(dir $(pdk_dexpreopt_config_mk)) && \
         unzip -qo $(PDK_FUSION_PLATFORM_ZIP) -d $(dir $(pdk_dexpreopt_config_mk)) pdk_dexpreopt_config.mk 2>/dev/null)
 
 -include $(pdk_dexpreopt_config_mk)

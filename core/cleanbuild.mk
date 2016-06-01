@@ -314,15 +314,15 @@ force_objclean :=
 
 .PHONY: clean-jack-files
 clean-jack-files: clean-dex-files
-	$(hide) find $(OUT_DIR) -name "*.jack" | xargs rm -f
+	$(hide) find $(OUT_DIR) -name "*.jack" | xargs rm -rf
 	$(hide) find $(OUT_DIR) -type d -name "jack" | xargs rm -rf
 	@echo "All jack files have been removed."
 
 .PHONY: clean-dex-files
 clean-dex-files:
-	$(hide) find $(OUT_DIR) -name "*.dex" ! -path "*/jack-incremental/*" | xargs rm -f
+	$(hide) find $(OUT_DIR) -name "*.dex" ! -path "*/jack-incremental/*" | xargs rm -rf
 	$(hide) for i in `find $(OUT_DIR) -name "*.jar" -o -name "*.apk"` ; do ((unzip -l $$i 2> /dev/null | \
-				grep -q "\.dex$$" && rm -f $$i) || continue ) ; done
+				grep -q "\.dex$$" && rm -rf $$i) || continue ) ; done
 	@echo "All dex files and archives containing dex files have been removed."
 
 .PHONY: clean-jack-incremental

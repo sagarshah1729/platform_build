@@ -94,7 +94,7 @@ $(combo_2nd_arch_prefix)TARGET_thumb_CFLAGS :=  -mthumb \
 # too big for a thumb "BL <label>" to go from one end to the other.
 ifeq ($(FORCE_ARM_DEBUGGING),true)
   $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS += -fno-omit-frame-pointer -fno-strict-aliasing
-  $(combo_2nd_arch_prefix)TARGET_thumb_CFLAGS += -marm -fno-omit-frame-pointer
+  $(combo_2nd_arch_prefix)TARGET_thumb_CFLAGS += -marm -rfno-omit-frame-pointer
 endif
 
 $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += \

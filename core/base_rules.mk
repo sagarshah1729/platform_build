@@ -72,7 +72,7 @@ endif
 
 ## Dump a .csv file of all modules and their tags
 #ifneq ($(tag-list-first-time),false)
-#$(shell rm -f tag-list.csv)
+#$(shell rm -rf tag-list.csv)
 #tag-list-first-time := false
 #endif
 #$(shell echo $(lastword $(filter-out config/% out/%,$(MAKEFILE_LIST))),$(LOCAL_MODULE),$(strip $(LOCAL_MODULE_CLASS)),$(subst $(space),$(comma),$(sort $(my_module_tags))) >> tag-list.csv)

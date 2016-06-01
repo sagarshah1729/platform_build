@@ -113,7 +113,7 @@ export_includes := $(intermediates)/export_includes
 $(export_includes): PRIVATE_EXPORT_C_INCLUDE_DIRS := $(LOCAL_EXPORT_C_INCLUDE_DIRS)
 $(export_includes) : $(LOCAL_MODULE_MAKEFILE_DEP)
 	@echo Export includes file: $< -- $@
-	$(hide) mkdir -p $(dir $@) && rm -f $@
+	$(hide) mkdir -p $(dir $@) && rm -rf $@
 ifdef LOCAL_EXPORT_C_INCLUDE_DIRS
 	$(hide) for d in $(PRIVATE_EXPORT_C_INCLUDE_DIRS); do \
 	        echo "-I $$d" >> $@; \

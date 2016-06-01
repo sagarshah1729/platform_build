@@ -1099,7 +1099,7 @@ sample_ADDITIONAL_INSTALLED := \
 samplecode: $(sample_APKS_COLLECTION)
 	@echo "Collect sample code apks: $^"
 	# remove apks that are not intended to be installed.
-	rm -f $(sample_ADDITIONAL_INSTALLED)
+	rm -rf $(sample_ADDITIONAL_INSTALLED)
 endif  # samplecode in $(MAKECMDGOALS)
 
 .PHONY: findbugs
